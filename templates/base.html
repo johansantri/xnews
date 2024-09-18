@@ -68,7 +68,16 @@
               <a class="nav-link" href="/post_us">auth</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
+              
+                
+                <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                  {% csrf_token %}
+                 
+                  <button type="submit" class="btn btn-link">Logout</button>
+                </form>
+                
+                
+                 
             </li>
             {% else %}
       
