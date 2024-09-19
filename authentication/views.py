@@ -19,7 +19,7 @@ from authentication.forms import UserRegistrationForm
 
 @login_required(login_url='login')
 def homepage(request):
-    return render(request, 'base.html')
+    return redirect('/post_list')
 
 
 def register(request):
