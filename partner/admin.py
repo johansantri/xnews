@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Post, Comment, Category
+from .models import Partners, Category
 from django.contrib.auth.models import User
 
 
 admin.site.register(Category)
-@admin.register(Post)
+@admin.register(Partners)
 class Blog(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'author', 'publish', 'status','category')
+    list_display = ('partner_name', 'slug', 'pic', 'publish', 'status','category')
     list_filter = ('status', 'created', 'publish')
-    search_fields = ('title', 'body')
-    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('partner_name', 'descriptions')
+    prepopulated_fields = {'slug': ('partner_name',)}
    # raw_id_fields = ('author',)
     date_hierarchy = 'publish'
     ordering = ('status', 'publish')
@@ -21,12 +21,7 @@ class Blog(admin.ModelAdmin):
         return qs.filter(author=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "author":
+        if db_field.name == "pic":
             kwargs["queryset"] = User.objects.filter(username=request.user.username)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-@admin.register(Comment)
-class Comment(admin.ModelAdmin):
-    list_display=('name', 'email', 'post', 'created', 'active')
-    list_filter = ('active', 'created', 'updated')
-    search_fields = ('name', 'email', 'body')

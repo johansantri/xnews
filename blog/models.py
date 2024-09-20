@@ -6,6 +6,7 @@ from django.urls import reverse
 from django_cleanup import cleanup
 from django_ckeditor_5.fields import CKEditor5Field
 from taggit.managers import TaggableManager
+from django_resized import ResizedImageField
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -35,7 +36,7 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='media/featured_image/%Y/%m/%d/') 
+    image = ResizedImageField(force_format="WEBP", quality=75, upload_to='media/featured_image/%Y/%m/%d/') 
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
     tags = TaggableManager() 
     class Meta:

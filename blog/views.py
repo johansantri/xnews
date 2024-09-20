@@ -23,7 +23,7 @@ def post_us(request):
     if query is not None and query !='':
         posts=User.objects.filter(Q(email__icontains=query) | Q(username__icontains=query)).distinct()  
         count = posts.count()     
-    page = Paginator(posts,50)
+    page = Paginator(posts,10)
     page_list = request.GET.get('page')
     page = page.get_page(page_list)
     
@@ -130,9 +130,9 @@ def reply_page(request):
             parent_id = request.POST.get('parent')  # from hidden input
             post_url = request.POST.get('post_url')  # from hidden input
 
-            print(post_id)
-            print(parent_id)
-            print(post_url)
+            #print(post_id)
+           # print(parent_id)
+           # print(post_url)
 
 
             reply = form.save(commit=False)
