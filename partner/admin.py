@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Partners, Category
+from .models import Partners, Category_partner
 from django.contrib.auth.models import User
 
 
-admin.site.register(Category)
+admin.site.register(Category_partner)
 @admin.register(Partners)
 class Blog(admin.ModelAdmin):
     list_display = ('partner_name', 'slug', 'pic', 'publish', 'status','category')

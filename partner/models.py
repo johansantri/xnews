@@ -12,7 +12,7 @@ class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager,self).get_queryset().filter(status='published')
 #category
-class Category(models.Model):
+class Category_partner(models.Model):
     category_text = models.CharField(max_length=200)
    
     def __str__(self):
@@ -29,8 +29,8 @@ class Partners(models.Model):
     partner_name = models.CharField(max_length=250)
    
     slug = models.SlugField(max_length=250, unique_for_date='publish')
-    pic = models.ForeignKey(User,on_delete=models.CASCADE)
-    category = models.ForeignKey(Category,  on_delete=models.CASCADE)
+    pic = models.ForeignKey(User,on_delete=models.CASCADE,related_name='auth_users')
+    category = models.ForeignKey(Category_partner,  on_delete=models.CASCADE,related_name='partner_posts')
     #body = models.TextField()
     descriptions=CKEditor5Field('Text', config_name='extends')
     publish = models.DateTimeField(default=timezone.now)

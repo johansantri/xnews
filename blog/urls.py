@@ -5,6 +5,8 @@ app_name = 'blog'
 urlpatterns=[
     path('post_list/',views.post_list,name="post_list"),
     path('post_us/',views.post_us,name="post_user"),
+    path('chat/',views.chat,name="chat"),
+    path('getChat/',views.getChat,name="getChat"),
     
     #path('signup/',views.signup, name='signup'), #this
     #path("logout/", views.logout_request, name= "logout"),
