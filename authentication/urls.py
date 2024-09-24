@@ -2,6 +2,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from authentication import views
 from authentication.forms import UserLoginForm, ResetPasswordConfirmForm, ResetPasswordForm
+from .views import profile_list, profile
 
 urlpatterns = [
     # login view from auth_views with custom login template
@@ -37,7 +38,8 @@ urlpatterns = [
 
     # path for homepage where successfull login will redirect
     path('', views.homepage, name='homepage'),
-
+    path('profile_list', profile_list, name='profile_list'),
+    path('profile/<int:pk>', profile, name='profile'),
 
 
 

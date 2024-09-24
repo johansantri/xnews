@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from authentication.forms import UserRegistrationForm
-
+from .models import Profile
 
 # Create your views here.
 
@@ -72,3 +72,27 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'authentication/email_activation/activation_unsuccessful.html')
 
+def profile_list(request):
+    if request.user.is_authenticated:
+        profiles = Profile.objects.exclude(user=request.user)
+        return render(request,'authentication/profile.html',{'profiles':profiles})
+    else:
+        return redirect('login')
+    
+def profile(request,pk):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id=pk)
+        if request.method == "POST":
+            current_user_profile = request.user.profile
+            action = request.POST['follow']
+            if action =="unfollow":
+                current_user_profile.follows.remove(profile)
+            elif action == "follow":
+                current_user_profile.follows.add(profile)
+            current_user_profile.save()
+            
+        return render(request,'authentication/myprofile.html',{'profile':profile})
+    else:
+        return redirect('login')
+    
+    

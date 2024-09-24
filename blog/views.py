@@ -24,14 +24,15 @@ collections.Hashable = collections.abc.Hashable
 
 bot = ChatBot('chatbot',read_only=False,
               logic_adapters=[{
-                   'import_path':'chatterbot.logic.BestMatch',
-                   'default_response':'sory, i dont know what that means',
-                   'maximum_similarity_threshold':0.95
+                   'import_path':'chatterbot.logic.BestMatch'
+                  # 'default_response':'sory, i dont know what that means',
+                  # 'maximum_similarity_threshold':0.95
                    }
                    ])
 
 list_to_train = [
-    
+     "hi",
+     "hello",
      "siapa nama anda",
      "saya robot ice institute",
      "mitra",
@@ -41,10 +42,10 @@ list_to_train = [
     
 ]
 #chatterbotCorpusTrainer=ChatterBotCorpusTrainer(bot)
-
+#chatterbotCorpusTrainer.train('chatterbot.corpus.indonesia')
 list_trainer=ListTrainer(bot)
 list_trainer.train(list_to_train)
-#chatterbotCorpusTrainer.train('chatterbot.corpus.indonesia')
+
 
 
 
