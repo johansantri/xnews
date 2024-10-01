@@ -15,18 +15,4 @@ function handleCancel(id){
 
 
 
-function buttonInput() {
-    
-    var userText = $('#textInput').val();
-    var userHTML = "<p class='userText'> User: <span>"+userText+"</span></p>";
-    $('#textInput').val("");
-
-    $('#chatbot').append(userHTML);
-
-    $.get('/getChat',{userMessage:userText}).done(function(data){
-        var returnMessage = "<p class='botText'>Chatbot: <span>"+data+"</span></p>";
-        $('#chatbot').append(returnMessage);
-    })
-  } 
-
   

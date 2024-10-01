@@ -15,48 +15,13 @@ from .forms import SignUpForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-
-#chatbot
-from chatterbot import ChatBot
-from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
-import collections.abc
-collections.Hashable = collections.abc.Hashable
-
-bot = ChatBot('chatbot',read_only=False,
-              logic_adapters=[{
-                   'import_path':'chatterbot.logic.BestMatch'
-                  # 'default_response':'sory, i dont know what that means',
-                  # 'maximum_similarity_threshold':0.95
-                   }
-                   ])
-
-list_to_train = [
-     "hi",
-     "hello",
-     "siapa nama anda",
-     "saya robot ice institute",
-     "mitra",
-     "42",
-     "peserta",
-     "ada 37,433",
-    
-]
-#chatterbotCorpusTrainer=ChatterBotCorpusTrainer(bot)
-#chatterbotCorpusTrainer.train('chatterbot.corpus.indonesia')
-list_trainer=ListTrainer(bot)
-list_trainer.train(list_to_train)
+from django.core import serializers
 
 
 
 
-def chat (request):
-     return render (request,'blog/chat.html')
 
-def getChat(request):
-     userMessage = request.GET.get('userMessage')
-     chatResponse=str(bot.get_response(userMessage))
-     print(chatResponse)
-     return HttpResponse(chatResponse)
+
 
 
 def post_us(request):
