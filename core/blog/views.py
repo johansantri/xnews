@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment, Category
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from .forms import CommentForm
 from taggit.models import Tag
@@ -23,7 +24,7 @@ from django.core import serializers
 
 
 
-
+@login_required(login_url='login')
 def post_us(request):
     posts = User.objects.all()
     count = User.objects.all().count()

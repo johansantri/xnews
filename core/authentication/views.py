@@ -18,8 +18,12 @@ from .models import Profile
 
 # Create your views here.
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def homepage(request):
+    if request.user.is_superuser:
+        return redirect ("/admin")
+    if request.user.is_staff:
+        return redirect("/post_us")
     return redirect('/post_list')
 
 
