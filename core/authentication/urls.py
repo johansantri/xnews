@@ -38,8 +38,8 @@ urlpatterns = [
 
     # path for homepage where successfull login will redirect
     path('', views.homepage, name='homepage'),
-    path('profile_list', profile_list, name='profile_list'),
-    path('profile/<int:pk>', profile, name='profile'),
+   # path('profile_list', profile_list, name='profile_list'),
+  #  path('profile/<int:pk>', profile, name='profile'),
 
 
 
