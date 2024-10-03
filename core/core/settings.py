@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'blog',
     'taggit',
+    'home',
     'django_ckeditor_5',
     'import_export',
     'authentication',

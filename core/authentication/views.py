@@ -24,7 +24,7 @@ def homepage(request):
         return redirect ("/admin")
     if request.user.is_staff:
         return redirect("/post_us")
-    return redirect('/post_list')
+    return redirect('/homes')
 
 
 def register(request):
