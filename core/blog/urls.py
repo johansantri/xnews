@@ -3,6 +3,8 @@ from . import views
 #from . import signup 
 app_name = 'blog'
 urlpatterns=[
+    path('blog/',views.blog,name="blog"),
+    path('blog/add',views.addBlog,name="add"),
     path('post_list/',views.post_list,name="post_list"),
     path('post_us/',views.post_us,name="post_user"),
     path('<slug:post>/',views.post_detail,name="post_detail"),

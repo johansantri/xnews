@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment, Category
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from .forms import CommentForm
 from taggit.models import Tag
@@ -12,7 +11,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout, get_user_model #add this
 from django.contrib.auth.forms import AuthenticationForm #add this
-from .forms import SignUpForm 
+from .forms import SignUpForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -20,11 +19,54 @@ from django.core import serializers
 
 
 
+def blog(request,tag_slug=None,):
+    posts = Post.published.all()
+
+    #categori
+    cursor = connection.cursor()
+    cursor.execute('SELECT DISTINCT blog_category.category_text FROM blog_post JOIN blog_category ON blog_post.category_id=blog_category.id')
+
+    po = cursor.fetchall()
+
+    # post tag
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
+
+        # search
+    query = request.GET.get("q")
+    if query:
+        posts=Post.published.filter(Q(title__icontains=query) | Q(tags__name__icontains=query)| Q(category__category_text__icontains=query)).distinct()
+            
+    paginator = Paginator(posts, 3) # 5 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+
+    except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+    # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render (request,'back/blog/index.html',{'posts':posts, page:'pages', 'tag':tag,'po':po})
+
+
+def addBlog(request):
+    
+        if request.method == "POST":
+            title = request.POST.get('title') 
+            print(title)
+
+            messages.success(request, f'Account created for !')
+            
+            return HttpResponse("Do something")
+       
+        return render(request,'back/blog/add.html')
 
 
 
-
-@login_required(login_url='login')
 def post_us(request):
     posts = User.objects.all()
     count = User.objects.all().count()
