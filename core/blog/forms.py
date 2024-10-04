@@ -1,8 +1,22 @@
 
 from django import forms
-from .models import Comment
+from .models import Comment, Post
 from django.contrib.auth.models import User 
 from django.contrib.auth.forms import UserCreationForm 
+from django_ckeditor_5.widgets import CKEditor5Widget
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title','body','author','category')
+    
+    # overriding default form setting and adding bootstrap class
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields["title"].required = True
+        self.fields["body"].required = True
+
+   
 
 class CommentForm(forms.ModelForm):
     class Meta:

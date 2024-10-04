@@ -3,17 +3,25 @@
 
 {% block content %}
 
-<form method="post">
-    
-<div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-    {% csrf_token %}
-    <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="title">
+<form method="POST" id="post-form">
+  {% csrf_token %}
+  <div class="form-group">
+  <label for="exampleInputEmail1">Title</label>
+  <input type="text" class="form-control" id="title" placeholder="Title">
+  <input type="hidden" class="form-control" id="author" placeholder="author" value="{{user.id}}">
+  <label for="exampleInputEmail1">category</label>
+  <select class="form-select" aria-label="Default select example" id="category">
+    <option selected>--</option>
+    {% for catu in cat%}
+    <option value="{{catu.id}}">{{catu.category_text}}</option>
+  {% endfor %}
+  </select>
   </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-    <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3"></textarea>
+  <div class="form-group">
+          <label for="exampleInputEmail1">Description</label>
+          <textarea class="form-control" id="body" placeholder="Description"></textarea>
   </div>
-  <button type="submit">save</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
   {% endblock%}
+
